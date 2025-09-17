@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>TextTuner – KI Text Optimierer</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f9f9fb;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+    h1 {
+      color: #4b0082;
+    }
+    textarea {
+      width: 400px;
+      height: 150px;
+      padding: 10px;
+      font-size: 14px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    button {
+      background: #6c63ff;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    button:hover {
+      background: #574bdb;
+    }
+    #result {
+      margin-top: 20px;
+      width: 400px;
+      white-space: pre-wrap;
+      background: #fff;
+      padding: 15px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+<body>
+  <h1>TextTuner ✨</h1>
+  <p>Füge deinen Text ein und lass die KI ihn verbessern:</p>
+  
+  <textarea id="inputText" placeholder="Schreib hier deinen Text..."></textarea><br>
+  <button onclick="sendText()">Text optimieren</button>
+
+  <div id="result"></div>
+
+  <script>
+    async function sendText() {
+      const input = document.getElementById("inputText").value;
+      const resultDiv = document.getElementById("result");
+      resultDiv.innerHTML = "Bitte warten... 🔄";
+
+      try {
+        const response = await fetch("https://texttuner-proxy.vercel.app/api/index", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ text: input })
+        });
+
+        const data = await response.text();
+        resultDiv.innerHTML = data;
+      } catch (err) {
+        resultDiv.innerHTML = "Fehler beim Senden 😢";
+        console.error(err);
+      }
+    }
+  </script>
+</body>
+</html>
