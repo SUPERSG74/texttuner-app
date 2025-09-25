@@ -4,6 +4,25 @@
   <meta charset="UTF-8">
   <title>TextTuner – KI Text Optimierer</title>
   <style>
+<script>
+  async function sendText() {
+    const text = document.getElementById("inputText").value;
+    const resultBox = document.getElementById("result");
+
+    try {
+      const response = await fetch("https://texttuner-proxy.vercel.app/api/index", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ text: text })
+      });
+
+      const data = await response.text();
+      resultBox.innerText = data;
+    } catch (err) {
+      resultBox.innerText = "Fehler: " + err.message;
+    }
+  }
+</script>
     body {
       font-family: Arial, sans-serif;
       background: #f9f9fb;
@@ -81,3 +100,4 @@
   </script>
 </body>
 </html>
+
