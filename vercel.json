@@ -1,0 +1,5 @@
+{
+  "rewrites": [
+    { "source": "/(.*)", "destination": "https://text-tune-launchpad.lovable.app/$1" }
+  ]
+}
